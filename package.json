@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "name": "fitfusion-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix backend",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Suchit-kumar-45/FitFusion-AI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Suchit-kumar-45/FitFusion-AI/issues"
+  },
+  "homepage": "https://github.com/Suchit-kumar-45/FitFusion-AI#readme"
+}
