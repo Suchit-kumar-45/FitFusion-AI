@@ -1,11 +1,13 @@
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 
-const {
-  createDiet,
-} = require('../controllers/dietController');
+const authMiddleware = require("../middleware/authMiddleware");
 
-router.post('/generate', createDiet);
+const {
+  generateDiet,
+} = require("../controllers/dietController");
+
+router.post("/generate", authMiddleware, generateDiet);
 
 module.exports = router;

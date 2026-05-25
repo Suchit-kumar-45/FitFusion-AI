@@ -1,0 +1,152 @@
+.section-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 25px;
+  border-radius: 20px;
+  margin-top: 30px;
+}
+
+.section-card h2 {
+  margin-bottom: 20px;
+}
+
+.section-card button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #22c55e;
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.section-card button:hover:not(:disabled) {
+  background: #16a34a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
+}
+
+.section-card button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.btn-log {
+  background: #3b82f6;
+  font-size: 14px;
+}
+
+.btn-log:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.btn-water {
+  background: #06b6d4;
+}
+
+.btn-water:hover:not(:disabled) {
+  background: #0891b2;
+}
+
+.section-card input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  margin-top: 10px;
+}
+
+.progress-box {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 15px;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.progress-header p {
+  margin: 0;
+  font-weight: 600;
+  color: #fff;
+}
+
+.streak-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #f59e0b, #ff6b6b);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 18px;
+  background: #1e293b;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 10px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.progress-fill {
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  transition: width 0.3s ease;
+}
+
+.water-fill {
+  background: linear-gradient(90deg, #06b6d4, #0891b2) !important;
+}
+
+.progress-text {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.water-box {
+  margin-top: 25px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 15px;
+}
+
+.water-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.water-header h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.water-target {
+  background: rgba(6, 182, 212, 0.2);
+  color: #06b6d4;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.water-intake {
+  font-size: 18px;
+  font-weight: 600;
+  color: #06b6d4;
+  margin: 12px 0;
+}

@@ -1,47 +1,45 @@
-import { useState } from "react";
-
-import {
-  Link,
-  useNavigate,
-} from "react-router-dom";
-
-import "../styles/login.css";
-
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthContext";
 import { loginUser } from "../services/authService";
+import "../styles/login.css";
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
-
-  const [password, setPassword] =
-    useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+
+    if (!email || !password) {
+      setError("Email and password are required");
+      return;
+    }
 
     try {
-      const data = {
-        email,
-        password,
-      };
+      setLoading(true);
 
-      const response = await loginUser(
-        data
-      );
+      const data = { email, password };
+      const response = await loginUser(data);
 
-      localStorage.setItem(
-        "token",
-        response.token
-      );
-
-      alert("Login Successful");
+      login(response.token, response.user);
 
       navigate("/dashboard");
     } catch (error) {
-      console.log(error);
-
-      alert("Invalid Credentials");
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Invalid credentials. Please try again.";
+      setError(errorMessage);
+      console.error("Login error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,6 +56,8 @@ function Login() {
         </p>
 
         <form onSubmit={handleLogin}>
+          {error && <div className="error-message">{error}</div>}
+
           <div className="login-group">
             <label>Email</label>
 
@@ -68,6 +68,7 @@ function Login() {
               onChange={(e) =>
                 setEmail(e.target.value)
               }
+              disabled={loading}
             />
           </div>
 
@@ -81,19 +82,21 @@ function Login() {
               onChange={(e) =>
                 setPassword(e.target.value)
               }
+              disabled={loading}
             />
           </div>
 
           <button
             className="login-btn"
             type="submit"
+            disabled={loading}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <div className="login-footer">
-          Don’t have an account?{" "}
+          Don't have an account?{" "}
           <Link to="/register">
             Register
           </Link>

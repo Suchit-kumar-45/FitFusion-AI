@@ -1,10 +1,26 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const askAI = async (message) => {
+const API =
+  "http://localhost:8000/api/chat";
+
+const getToken = () => localStorage.getItem("token");
+
+export const askAI = async (
+  message
+) => {
+  if (!message || message.trim() === "") {
+    throw new Error("Message cannot be empty");
+  }
+
   const response = await axios.post(
-    'http://localhost:5000/api/chat',
+    `${API}/ask`,
     {
       message,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+      },
     }
   );
 

@@ -10,16 +10,19 @@ const dietRoutes = require("./src/routes/dietRoutes");
 
 const aiChatRoutes = require("./src/routes/aiChatRoutes");
 
+const progressRoutes = require("./src/routes/progressRoutes");
+
 const app = express();
 
-app.use(
-  cors({
-    origin: ["http://localhost:5173"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+// CORS Configuration - Enable CORS before other middleware
+app.use(cors({
+  origin: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
+// Middleware
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -33,5 +36,20 @@ app.use("/api/workout", workoutRoutes);
 app.use("/api/diet", dietRoutes);
 
 app.use("/api/chat", aiChatRoutes);
+
+app.use("/api/progress", progressRoutes);
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error("🔴 Error:", err);
+  res.status(err.status || 500).json({
+    message: err.message || "Internal Server Error",
+  });
+});
 
 module.exports = app;

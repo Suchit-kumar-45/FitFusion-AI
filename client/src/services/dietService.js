@@ -1,10 +1,21 @@
-import axios from 'axios';
+import axios from "axios";
 
-export const generateDiet = async (data) => {
-  const response = await axios.post(
-    'http://localhost:5000/api/diet/generate',
-    data
-  );
+const API =
+  "http://localhost:8000/api/diet";
 
-  return response.data;
-};
+const getToken = () => localStorage.getItem("token");
+
+export const generateDiet =
+  async (data = {}) => {
+    const response = await axios.post(
+      `${API}/generate`,
+      data,
+      {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+        },
+      }
+    );
+
+    return response.data;
+  };

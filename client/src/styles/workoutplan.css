@@ -1,0 +1,152 @@
+.workout-plan-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  padding: 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.workout-plan-form {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.workout-plan-form h1 {
+  color: #333;
+  margin: 0 0 25px 0;
+  font-size: 28px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.error-message {
+  background: #ff6b6b;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.generate-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.generate-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.generate-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.workout-plan-result {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.workout-plan-result h2 {
+  color: #333;
+  margin: 0 0 20px 0;
+  font-size: 24px;
+}
+
+.plan-content {
+  color: #555;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.plan-content p {
+  margin: 12px 0;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.plan-content p:last-child {
+  border-bottom: none;
+}
+
+@media (max-width: 1024px) {
+  .workout-plan-container {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .workout-plan-form {
+    position: static;
+  }
+
+  .workout-plan-result {
+    max-height: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .workout-plan-container {
+    padding: 15px;
+  }
+
+  .workout-plan-form {
+    padding: 20px;
+  }
+
+  .workout-plan-form h1 {
+    font-size: 22px;
+  }
+
+  .workout-plan-result h2 {
+    font-size: 20px;
+  }
+}

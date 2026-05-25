@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { generateDiet } from "../services/dietService";
+import "../styles/dietplan.css";
 
 function DietPlan() {
   const [goal, setGoal] = useState("");
@@ -7,107 +8,98 @@ function DietPlan() {
   const [calories, setCalories] = useState("");
   const [dietPlan, setDietPlan] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleGenerateDiet = async () => {
+  const handleGenerateDiet = async (e) => {
+    e.preventDefault();
+    setError("");
+
     try {
       setLoading(true);
 
       const data = {
         goal,
         dietType,
-        calories,
+        calories: parseFloat(calories),
       };
 
       const response = await generateDiet(data);
 
-      setDietPlan(response.dietPlan || response.diet);
-    } catch (error) {
-      console.log(error);
-      alert("Failed to generate diet plan");
+      setDietPlan(response.dietPlan);
+    } catch (err) {
+      setError(err.response?.data?.message || err.message || "Failed to generate diet plan");
+      console.error("Error:", err);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div
-      style={{
-        maxWidth: "700px",
-        margin: "40px auto",
-        padding: "20px",
-      }}
-    >
-      <h1>AI Diet Planner</h1>
+    <div className="diet-plan-container">
+      <div className="diet-plan-form">
+        <h1>AI Diet Planner</h1>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "15px",
-          marginTop: "20px",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Enter Goal (Fat Loss / Muscle Gain)"
-          value={goal}
-          onChange={(e) => setGoal(e.target.value)}
-          style={{
-            padding: "12px",
-            fontSize: "16px",
-          }}
-        />
+        <form onSubmit={handleGenerateDiet}>
+          <div className="form-group">
+            <label>Fitness Goal *</label>
+            <select
+              value={goal}
+              onChange={(e) => setGoal(e.target.value)}
+              required
+            >
+              <option value="">Select your goal</option>
+              <option value="Muscle Gain">Muscle Gain</option>
+              <option value="Fat Loss">Fat Loss</option>
+              <option value="Weight Maintenance">Weight Maintenance</option>
+              <option value="Bulking">Bulking</option>
+              <option value="Cutting">Cutting</option>
+            </select>
+          </div>
 
-        <input
-          type="text"
-          placeholder="Diet Type (Veg / Non-Veg)"
-          value={dietType}
-          onChange={(e) => setDietType(e.target.value)}
-          style={{
-            padding: "12px",
-            fontSize: "16px",
-          }}
-        />
+          <div className="form-group">
+            <label>Diet Type *</label>
+            <select
+              value={dietType}
+              onChange={(e) => setDietType(e.target.value)}
+              required
+            >
+              <option value="">Select diet type</option>
+              <option value="Veg">Vegetarian</option>
+              <option value="Non-Veg">Non-Vegetarian</option>
+              <option value="Vegan">Vegan</option>
+              <option value="Keto">Keto</option>
+              <option value="High-Protein">High-Protein</option>
+            </select>
+          </div>
 
-        <input
-          type="number"
-          placeholder="Daily Calories"
-          value={calories}
-          onChange={(e) => setCalories(e.target.value)}
-          style={{
-            padding: "12px",
-            fontSize: "16px",
-          }}
-        />
+          <div className="form-group">
+            <label>Daily Calories *</label>
+            <input
+              type="number"
+              placeholder="Enter daily calorie intake"
+              value={calories}
+              onChange={(e) => setCalories(e.target.value)}
+              required
+              min="0"
+            />
+          </div>
 
-        <button
-          onClick={handleGenerateDiet}
-          style={{
-            padding: "12px",
-            backgroundColor: "black",
-            color: "white",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          {loading ? "Generating..." : "Generate Diet Plan"}
-        </button>
+          {error && <div className="error-message">{error}</div>}
+
+          <button type="submit" disabled={loading} className="generate-btn">
+            {loading ? "Generating..." : "Generate Diet Plan"}
+          </button>
+        </form>
       </div>
 
       {dietPlan && (
-        <div
-          style={{
-            marginTop: "30px",
-            padding: "20px",
-            border: "1px solid #ccc",
-            borderRadius: "10px",
-            whiteSpace: "pre-wrap",
-          }}
-        >
-          <h2>Your AI Diet Plan</h2>
-
-          <p>{dietPlan}</p>
+        <div className="diet-plan-result">
+          <h2>Your Personalized Diet Plan</h2>
+          <div className="plan-content">
+            {dietPlan.split('\n').map((line, idx) => (
+              <p key={idx}>{line}</p>
+            ))}
+          </div>
         </div>
       )}
     </div>

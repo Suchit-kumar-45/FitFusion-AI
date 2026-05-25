@@ -1,8 +1,14 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const dietSchema = new mongoose.Schema(
   {
-    userId: mongoose.Schema.Types.ObjectId,
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+
+    goal: String,
+
     dietPlan: String,
   },
   {
@@ -10,4 +16,7 @@ const dietSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Diet', dietSchema);
+module.exports = mongoose.model(
+  "Diet",
+  dietSchema
+);

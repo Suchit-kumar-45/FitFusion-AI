@@ -1,11 +1,17 @@
-const express = require('express');
+const express = require("express");
 
 const router = express.Router();
 
-const {
-  createWorkout,
-} = require('../controllers/workoutController');
+const authMiddleware = require("../middleware/authMiddleware");
 
-router.post('/generate', createWorkout);
+const {
+  generateWorkout,
+} = require("../controllers/workoutController");
+
+router.post(
+  "/generate",
+  authMiddleware,
+  generateWorkout
+);
 
 module.exports = router;

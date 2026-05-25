@@ -1,43 +1,48 @@
 import { useState } from "react";
-
-import {
-  Link,
-  useNavigate,
-} from "react-router-dom";
-
-import "../styles/register.css";
-
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/authService";
+import "../styles/register.css";
 
 function Register() {
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
-
   const [email, setEmail] = useState("");
-
-  const [password, setPassword] =
-    useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    setError("");
+
+    if (!name || !email || !password) {
+      setError("All fields are required");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
 
     try {
-      const data = {
-        name,
-        email,
-        password,
-      };
+      setLoading(true);
+
+      const data = { name, email, password };
 
       await registerUser(data);
 
-      alert("Registration Successful");
-
       navigate("/login");
     } catch (error) {
-      console.log(error);
-
-      alert("Registration Failed");
+      const errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Registration failed. Please try again.";
+      setError(errorMessage);
+      console.error("Register error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,6 +59,8 @@ function Register() {
         </p>
 
         <form onSubmit={handleRegister}>
+          {error && <div className="error-message">{error}</div>}
+
           <div className="register-group">
             <label>Full Name</label>
 
@@ -64,6 +71,7 @@ function Register() {
               onChange={(e) =>
                 setName(e.target.value)
               }
+              disabled={loading}
             />
           </div>
 
@@ -77,6 +85,7 @@ function Register() {
               onChange={(e) =>
                 setEmail(e.target.value)
               }
+              disabled={loading}
             />
           </div>
 
@@ -85,19 +94,21 @@ function Register() {
 
             <input
               type="password"
-              placeholder="Create password"
+              placeholder="Create password (min 6 characters)"
               value={password}
               onChange={(e) =>
                 setPassword(e.target.value)
               }
+              disabled={loading}
             />
           </div>
 
           <button
             className="register-btn"
             type="submit"
+            disabled={loading}
           >
-            Register
+            {loading ? "Registering..." : "Register"}
           </button>
         </form>
 
