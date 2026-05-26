@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API =
-  "http://localhost:8000/api/workout";
+  `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/workout`;
 
 const getToken = () => localStorage.getItem("token");
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API =
-  "http://localhost:8000/api/chat";
+  `${import.meta.env.VITE_API_URL || "http://localhost:8000"}/api/chat`;
 
 const getToken = () => localStorage.getItem("token");
 
